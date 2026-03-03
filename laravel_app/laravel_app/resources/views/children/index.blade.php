@@ -43,6 +43,10 @@
                                         <td class="border border-gray-300 px-4 py-2">{{ $child->nickname }}</td>
                                         <td class="border border-gray-300 px-4 py-2">{{ $child->birth_date->format('Y年m月d日') }}</td>
                                         <td class="border border-gray-300 px-4 py-2">
+                                            <a href="{{ route('schedules.index', $child) }}"
+                                               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                                               スケジュール
+                                            </a>
                                             <a href="{{ route('children.edit', $child) }}"
                                                 class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded">
                                                 編集

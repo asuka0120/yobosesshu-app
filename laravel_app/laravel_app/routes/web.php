@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChildController;
+use App\Http\Controllers\VaccinationScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('children', ChildController::class);
+    Route::get('/children/{child}/schedules', [VaccinationScheduleController::class, 'index'])->name('schedules.index');
 });
 
 require __DIR__.'/auth.php';
