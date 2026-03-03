@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Child;
+use App\Models\Vaccine;
+use App\Models\VaccinationSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +31,11 @@ class ChildController extends Controller
             'birth_date' => 'required|date',
         ]);
 
-        Auth::user()->children()->create($request->only('nickname', 'birth_date'));
+        // 子どもを登録
+        $child = Auth::user()->children()->create($request->only('nickname', 'birth_date'));
+
+        // スケジュールを自動生成
+        $this->generateSchedule($child);
 
         return redirect()->route('children.index')->with('success', 'お子さんを登録しました！');
     }
@@ -58,5 +64,23 @@ class ChildController extends Controller
     {
         $child->delete();
         return redirect()->route('children.index')->with('success', 'ゴミ箱に移動しました！');
+    }
+
+    // スケジュール自動生成
+    private function generateSchedule(Child $child)
+    {
+        $vaccines = Vaccine::all();
+
+        foreach ($vaccines as $vaccine) {
+            // 生年月日 + 推奨月齢 = 接種予定日
+            $scheduledDate = $child->birth_date->addMonths($vaccine->recommended_months);
+
+            VaccinationSchedule::create([
+                'child_id' => $child->id,
+                'vaccine_id' => $vaccine->id,
+                'status' => 'pending',
+                'scheduled_date' => $scheduledDate,
+            ]);
+        }
     }
 }
