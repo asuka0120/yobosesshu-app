@@ -33,4 +33,24 @@ class VaccinationScheduleController extends Controller
 
         return view('vaccination_schedules.index', compact('child', 'regularSchedules', 'optionalSchedules'));
     }
+
+    // 接種済みチェック
+    public function complete(Request $request, Child $child, VaccinationSchedule $schedule)
+    {
+        // 自分の子どもかチェック
+        if ($child->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'vaccinated_date' => 'required|date',
+        ]);
+
+        $schedule->update([
+            'status' => 'completed',
+            'vaccinated_date' => $request->vaccinated_date,
+        ]);
+
+        return redirect()->route('schedules.index', $child)->with('success', '接種済みに更新しました！');
+    }
 }
