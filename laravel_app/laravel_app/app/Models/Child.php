@@ -24,4 +24,14 @@ class Child extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function vaccinationSchedules()
+    {
+        return $this->hasMany(VaccinationSchedule::class);
+    }
+
+    public function sideEffects()
+    {
+        return $this->hasMany(SideEffect::class);
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\VaccinationScheduleController;
 use App\Http\Controllers\TrashController;
+use App\Http\Controllers\SideEffectController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/trash', [TrashController::class, 'index'])->name('trash.index');
     Route::post('/trash/{id}/restore', [TrashController::class, 'restore'])->name('trash.restore');
     Route::delete('/trash/{id}/force-delete', [TrashController::class, 'forceDelete'])->name('trash.forceDelete');
+
+    // 副反応
+    Route::get('/children/{child}/side-effects', [SideEffectController::class, 'index'])->name('side_effects.index');
+    Route::get('/children/{child}/side-effects/create', [SideEffectController::class, 'create'])->name('side_effects.create');
+    Route::post('/children/{child}/side-effects', [SideEffectController::class, 'store'])->name('side_effects.store');
+    Route::delete('/children/{child}/side-effects/{sideEffect}', [SideEffectController::class, 'destroy'])->name('side_effects.destroy');
 });
 
 require __DIR__.'/auth.php';

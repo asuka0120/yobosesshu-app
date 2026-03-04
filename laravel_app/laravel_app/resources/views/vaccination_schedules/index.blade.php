@@ -9,12 +9,16 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             {{-- 戻るボタン --}}
-            <div class="mb-4">
-                <a href="{{ route('children.index') }}"
-                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                    ← お子さん一覧に戻る
-                </a>
-            </div>
+            <div class="mb-4 flex gap-2">
+    <a href="{{ route('children.index') }}"
+        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+        ← お子さん一覧に戻る
+    </a>
+    <a href="{{ route('side_effects.index', $child) }}"
+        class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+        💊 副反応記録
+    </a>
+</div>
 
             {{-- 成功メッセージ --}}
             @if (session('success'))
