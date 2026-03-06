@@ -8,6 +8,7 @@ use App\Http\Controllers\VaccinationScheduleController;
 use App\Http\Controllers\TrashController;
 use App\Http\Controllers\SideEffectController;
 use App\Http\Controllers\MedicalInstitutionController;
+use App\Http\Controllers\AppointmentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,6 +41,12 @@ Route::middleware('auth')->group(function () {
 
     // 医療機関
     Route::resource('medical_institutions', MedicalInstitutionController::class);
+
+    // 予約
+    Route::get('/children/{child}/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+    Route::get('/children/{child}/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
+    Route::post('/children/{child}/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+    Route::delete('/children/{child}/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
 });
 
 require __DIR__.'/auth.php';
