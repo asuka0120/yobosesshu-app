@@ -24,6 +24,9 @@
     <x-nav-link :href="route('medical_institutions.index')" :active="request()->routeIs('medical_institutions.*')">
     🏥 医療機関
     </x-nav-link>
+    <x-nav-link :href="route('vaccines.index')" :active="request()->routeIs('vaccines.*')">
+    💉 ワクチンガイド
+    </x-nav-link>
 </div>
             </div>
 

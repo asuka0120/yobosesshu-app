@@ -9,6 +9,7 @@ use App\Http\Controllers\TrashController;
 use App\Http\Controllers\SideEffectController;
 use App\Http\Controllers\MedicalInstitutionController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\VaccineController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,6 +48,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/children/{child}/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
     Route::post('/children/{child}/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::delete('/children/{child}/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+
+    // ワクチン説明・ガイド
+    Route::get('/vaccines', [VaccineController::class, 'index'])->name('vaccines.index');
+    Route::get('/vaccines/{vaccine}', [VaccineController::class, 'show'])->name('vaccines.show');
 });
 
 require __DIR__.'/auth.php';
