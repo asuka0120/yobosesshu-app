@@ -10,6 +10,7 @@ use App\Http\Controllers\SideEffectController;
 use App\Http\Controllers\MedicalInstitutionController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\VaccineController;
+use App\Http\Controllers\MotherChildPhotoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -52,6 +53,12 @@ Route::middleware('auth')->group(function () {
     // ワクチン説明・ガイド
     Route::get('/vaccines', [VaccineController::class, 'index'])->name('vaccines.index');
     Route::get('/vaccines/{vaccine}', [VaccineController::class, 'show'])->name('vaccines.show');
+
+    // 母子手帳写真
+    Route::get('/children/{child}/photos', [MotherChildPhotoController::class, 'index'])->name('mother_child_photos.index');
+    Route::get('/children/{child}/photos/create', [MotherChildPhotoController::class, 'create'])->name('mother_child_photos.create');
+    Route::post('/children/{child}/photos', [MotherChildPhotoController::class, 'store'])->name('mother_child_photos.store');
+    Route::delete('/children/{child}/photos/{motherChildPhoto}', [MotherChildPhotoController::class, 'destroy'])->name('mother_child_photos.destroy');
 });
 
 require __DIR__.'/auth.php';

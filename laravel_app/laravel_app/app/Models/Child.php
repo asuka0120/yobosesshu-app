@@ -34,4 +34,9 @@ class Child extends Model
     {
         return $this->hasMany(SideEffect::class);
     }
+
+    public function motherChildPhotos()
+    {
+        return $this->hasMany(MotherChildPhoto::class);
+    }
 }
