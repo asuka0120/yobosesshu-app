@@ -21,6 +21,9 @@
     <x-nav-link :href="route('trash.index')" :active="request()->routeIs('trash.*')">
         🗑️ ゴミ箱
     </x-nav-link>
+    <x-nav-link :href="route('medical_institutions.index')" :active="request()->routeIs('medical_institutions.*')">
+    🏥 医療機関
+    </x-nav-link>
 </div>
             </div>
 

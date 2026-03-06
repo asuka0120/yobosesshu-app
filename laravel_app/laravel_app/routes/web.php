@@ -7,6 +7,7 @@ use App\Http\Controllers\ChildController;
 use App\Http\Controllers\VaccinationScheduleController;
 use App\Http\Controllers\TrashController;
 use App\Http\Controllers\SideEffectController;
+use App\Http\Controllers\MedicalInstitutionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/children/{child}/side-effects/create', [SideEffectController::class, 'create'])->name('side_effects.create');
     Route::post('/children/{child}/side-effects', [SideEffectController::class, 'store'])->name('side_effects.store');
     Route::delete('/children/{child}/side-effects/{sideEffect}', [SideEffectController::class, 'destroy'])->name('side_effects.destroy');
+
+    // 医療機関
+    Route::resource('medical_institutions', MedicalInstitutionController::class);
 });
 
 require __DIR__.'/auth.php';
