@@ -11,6 +11,7 @@ use App\Http\Controllers\MedicalInstitutionController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\VaccineController;
 use App\Http\Controllers\MotherChildPhotoController;
+use App\Http\Controllers\FamilyGroupController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,6 +60,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/children/{child}/photos/create', [MotherChildPhotoController::class, 'create'])->name('mother_child_photos.create');
     Route::post('/children/{child}/photos', [MotherChildPhotoController::class, 'store'])->name('mother_child_photos.store');
     Route::delete('/children/{child}/photos/{motherChildPhoto}', [MotherChildPhotoController::class, 'destroy'])->name('mother_child_photos.destroy');
+
+    // 家族共有
+    Route::get('/family', [FamilyGroupController::class, 'index'])->name('family_groups.index');
+    Route::post('/family', [FamilyGroupController::class, 'store'])->name('family_groups.store');
+    Route::post('/family/join', [FamilyGroupController::class, 'join'])->name('family_groups.join');
+    Route::delete('/family/{id}/members/{userId}', [FamilyGroupController::class, 'removeMember'])->name('family_groups.removeMember');
+    Route::delete('/family/{id}', [FamilyGroupController::class, 'destroy'])->name('family_groups.destroy');
 });
 
 require __DIR__.'/auth.php';

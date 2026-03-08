@@ -27,6 +27,9 @@
     <x-nav-link :href="route('vaccines.index')" :active="request()->routeIs('vaccines.*')">
     💉 ワクチンガイド
     </x-nav-link>
+    <x-nav-link :href="route('family_groups.index')" :active="request()->routeIs('family_groups.*')">
+    👨‍👩‍👧 家族共有
+    </x-nav-link>
 </div>
             </div>
 

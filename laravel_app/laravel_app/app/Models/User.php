@@ -36,4 +36,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(MedicalInstitution::class);
     }
+
+    // 自分が作成したファミリーグループ
+    public function ownedFamilyGroup()
+    {
+        return $this->hasOne(FamilyGroup::class, 'owner_id');
+    }
+
+    // 参加しているファミリーグループ
+    public function familyGroups()
+    {
+        return $this->belongsToMany(FamilyGroup::class, 'family_group_members');
+    }
 }
