@@ -53,52 +53,53 @@
             </div>
 
             {{-- 次回接種予定 --}}
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6">
-                    <h3 class="text-lg font-bold text-gray-700 mb-4">📅 次回接種予定（直近10件）</h3>
-                    @if ($upcomingSchedules->isEmpty())
-                        <p class="text-gray-500">接種予定はありません。</p>
-                    @else
-                        <table class="w-full border-collapse border border-gray-300">
-                            <thead>
-                                <tr class="bg-gray-100">
-                                    <th class="border border-gray-300 px-4 py-2">お子さん</th>
-                                    <th class="border border-gray-300 px-4 py-2">ワクチン名</th>
-                                    <th class="border border-gray-300 px-4 py-2">接種予定日</th>
-                                    <th class="border border-gray-300 px-4 py-2">種別</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($upcomingSchedules as $schedule)
-                                    <tr class="{{ $schedule->scheduled_date->isPast() ? 'bg-red-50' : '' }}">
-                                        <td class="border border-gray-300 px-4 py-2">
-                                            {{ $schedule->child->nickname }}
-                                        </td>
-                                        <td class="border border-gray-300 px-4 py-2">
-                                            {{ $schedule->vaccine->name }}
-                                        </td>
-                                        <td class="border border-gray-300 px-4 py-2">
-                                            {{ $schedule->scheduled_date->format('Y年m月d日') }}
-                                            @if ($schedule->scheduled_date->isPast())
-                                                <span class="text-red-500 text-sm">（期限切れ）</span>
-                                            @elseif ($schedule->scheduled_date->diffInDays(now()) <= 30)
-                                                <span class="text-orange-500 text-sm">（もうすぐ）</span>
-                                            @endif
-                                        </td>
-                                        <td class="border border-gray-300 px-4 py-2">
-                                            @if ($schedule->vaccine->type === 'regular')
-                                                <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm">定期</span>
-                                            @else
-                                                <span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-sm">任意</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @endif
-                </div>
-            </div>
+<div class="overflow-hidden shadow-sm sm:rounded-2xl" style="background: #fff9fe; border: 2px solid #e9d5ff;">
+    <div class="p-6">
+        <h3 class="text-lg font-bold mb-4" style="color: #7c3aed;">🍼 次回接種予定（直近10件）</h3>
+        @if ($upcomingSchedules->isEmpty())
+            <p class="text-gray-500">接種予定はありません。</p>
+        @else
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #ede9fe, #fce7f3);">
+                        <th class="px-4 py-3 text-left rounded-tl-xl" style="color: #6d28d9;">👶 お子さん</th>
+                        <th class="px-4 py-3 text-left" style="color: #6d28d9;">💉 ワクチン名</th>
+                        <th class="px-4 py-3 text-left" style="color: #6d28d9;">📅 接種予定日</th>
+                        <th class="px-4 py-3 text-left rounded-tr-xl" style="color: #6d28d9;">種別</th>
+                    </tr>
+                </thead>
+                <tbody>
+    @foreach ($upcomingSchedules as $schedule)
+        <tr class="border-b hover:opacity-80 transition"
+            style="{{ $schedule->scheduled_date->isPast() ? 'background: #fce7f3;' : 'background: white;' }}">
+            <td class="px-4 py-3 font-bold text-center" style="color: #7c3aed;">
+                {{ $schedule->child->nickname }}
+            </td>
+            <td class="px-4 py-3 text-gray-700 text-center">
+                {{ $schedule->vaccine->name }}
+            </td>
+            <td class="px-4 py-3 text-center">
+                <span class="text-gray-700">{{ $schedule->scheduled_date->format('Y年m月d日') }}</span>
+                @if ($schedule->scheduled_date->isPast())
+                    <span class="ml-1 text-xs font-bold text-red-500">⚠️ 期限切れ</span>
+                @elseif ($schedule->scheduled_date->diffInDays(now()) <= 30)
+                    <span class="ml-1 text-xs font-bold text-orange-500">🔔 もうすぐ</span>
+                @endif
+            </td>
+            <td class="px-4 py-3 text-center">
+                @if ($schedule->vaccine->type === 'regular')
+                    <span class="text-xs text-white px-2 py-1 rounded-full font-bold" style="background: #8b5cf6;">定期</span>
+                @else
+                    <span class="text-xs text-white px-2 py-1 rounded-full font-bold" style="background: #f97316;">任意</span>
+                @endif
+            </td>
+        </tr>
+    @endforeach
+</tbody>
+            </table>
+        @endif
+    </div>
+</div>
 
         </div>
     </div>
