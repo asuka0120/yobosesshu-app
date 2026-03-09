@@ -12,6 +12,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\VaccineController;
 use App\Http\Controllers\MotherChildPhotoController;
 use App\Http\Controllers\FamilyGroupController;
+use App\Http\Controllers\PushSubscriptionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -67,6 +68,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/family/join', [FamilyGroupController::class, 'join'])->name('family_groups.join');
     Route::delete('/family/{id}/members/{userId}', [FamilyGroupController::class, 'removeMember'])->name('family_groups.removeMember');
     Route::delete('/family/{id}', [FamilyGroupController::class, 'destroy'])->name('family_groups.destroy');
+
+    // プッシュ通知購読
+    Route::post('/push-subscriptions', [PushSubscriptionController::class, 'store'])->name('push_subscriptions.store');
+    Route::delete('/push-subscriptions', [PushSubscriptionController::class, 'destroy'])->name('push_subscriptions.destroy');
 });
 
 require __DIR__.'/auth.php';

@@ -5,6 +5,22 @@
         </h2>
     </x-slot>
 
+    {{-- 通知ボタン --}}
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="p-4 flex gap-3 items-center">
+            <span class="text-gray-700 font-bold">🔔 プッシュ通知</span>
+            <button onclick="subscribePush()"
+                class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                通知を有効にする
+            </button>
+            <button onclick="unsubscribePush()"
+                class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+                通知を無効にする
+            </button>
+        </div>
+    </div>
+</div>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
@@ -103,4 +119,72 @@
 
         </div>
     </div>
+    
+    {{-- プッシュ通知購読 --}}
+<script>
+    const vapidPublicKey = '{{ env("VAPID_PUBLIC_KEY") }}';
+
+    function urlBase64ToUint8Array(base64String) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    }
+
+    async function subscribePush() {
+        if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+            alert('このブラウザはプッシュ通知に対応していません。');
+            return;
+        }
+
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+            alert('通知が許可されませんでした。');
+            return;
+        }
+
+        const registration = await navigator.serviceWorker.register('/sw.js');
+        await navigator.serviceWorker.ready;
+
+        const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
+        });
+
+        await fetch('/push-subscriptions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: JSON.stringify(subscription),
+        });
+
+        alert('プッシュ通知を有効にしました！');
+    }
+
+    async function unsubscribePush() {
+        const registration = await navigator.serviceWorker.getRegistration('/sw.js');
+        if (!registration) return;
+
+        const subscription = await registration.pushManager.getSubscription();
+        if (!subscription) return;
+
+        await fetch('/push-subscriptions', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: JSON.stringify({ endpoint: subscription.endpoint }),
+        });
+
+        await subscription.unsubscribe();
+        alert('プッシュ通知を無効にしました。');
+    }
+</script>
 </x-app-layout>
