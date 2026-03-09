@@ -30,49 +30,51 @@
                     @else
                         <table class="w-full border-collapse border border-gray-300">
                             <thead>
-                                <tr class="bg-gray-100">
-                                    <th class="border border-gray-300 px-4 py-2">ニックネーム</th>
-                                    <th class="border border-gray-300 px-4 py-2">生年月日</th>
-                                    <th class="border border-gray-300 px-4 py-2">削除日時</th>
-                                    <th class="border border-gray-300 px-4 py-2">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($trashedChildren as $child)
-                                    <tr>
-                                        <td class="border border-gray-300 px-4 py-2">
-                                            {{ $child->nickname }}
-                                        </td>
-                                        <td class="border border-gray-300 px-4 py-2">
-                                            {{ $child->birth_date->format('Y年m月d日') }}
-                                        </td>
-                                        <td class="border border-gray-300 px-4 py-2">
-                                            {{ $child->deleted_at->format('Y年m月d日 H:i') }}
-                                        </td>
-                                        <td class="border border-gray-300 px-4 py-2">
-                                            {{-- 復元ボタン --}}
-                                            <form action="{{ route('trash.restore', $child->id) }}" method="POST" class="inline">
-                                                @csrf
-                                                <button type="submit"
-                                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">
-                                                    復元
-                                                </button>
-                                            </form>
+    <tr class="bg-gray-100">
+        <th class="border border-gray-300 px-4 py-2 text-center">ニックネーム</th>
+        <th class="border border-gray-300 px-4 py-2 text-center">生年月日</th>
+        <th class="border border-gray-300 px-4 py-2 text-center">削除日時</th>
+        <th class="border border-gray-300 px-4 py-2 text-center">操作</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach ($trashedChildren as $child)
+        <tr>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+                {{ $child->nickname }}
+            </td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+                {{ $child->birth_date->format('Y年m月d日') }}
+            </td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+                {{ $child->deleted_at->format('Y年m月d日 H:i') }}
+            </td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+                <div class="flex gap-2 justify-center">
+                    {{-- 復元ボタン --}}
+                    <form action="{{ route('trash.restore', $child->id) }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit"
+                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">
+                            復元
+                        </button>
+                    </form>
 
-                                            {{-- 完全削除ボタン --}}
-                                            <form action="{{ route('trash.forceDelete', $child->id) }}" method="POST" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    onclick="return confirm('完全に削除します。この操作は元に戻せません。よろしいですか？')"
-                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">
-                                                    完全削除
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
+                    {{-- 完全削除ボタン --}}
+                    <form action="{{ route('trash.forceDelete', $child->id) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            onclick="return confirm('完全に削除します。この操作は元に戻せません。よろしいですか？')"
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">
+                            完全削除
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    @endforeach
+</tbody>
                         </table>
                     @endif
 
