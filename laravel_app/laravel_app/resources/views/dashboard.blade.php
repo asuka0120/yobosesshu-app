@@ -8,7 +8,7 @@
     {{-- 通知ボタン --}}
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-4 flex gap-3 items-center">
+        <div class="p-4 flex gap-6 items-center">
             <span class="text-gray-700 font-bold">🔔 プッシュ通知</span>
             <button onclick="subscribePush()"
                 class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
@@ -119,7 +119,7 @@
 
         </div>
     </div>
-    
+
     {{-- プッシュ通知購読 --}}
 <script>
     const vapidPublicKey = '{{ env("VAPID_PUBLIC_KEY") }}';

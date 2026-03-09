@@ -30,40 +30,42 @@
                         <p class="text-gray-500">まだお子さんが登録されていません。</p>
                     @else
                         <table class="w-full border-collapse border border-gray-300">
-                            <thead>
-                                <tr class="bg-gray-100">
-                                    <th class="border border-gray-300 px-4 py-2">ニックネーム</th>
-                                    <th class="border border-gray-300 px-4 py-2">生年月日</th>
-                                    <th class="border border-gray-300 px-4 py-2">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($children as $child)
-                                    <tr>
-                                        <td class="border border-gray-300 px-4 py-2">{{ $child->nickname }}</td>
-                                        <td class="border border-gray-300 px-4 py-2">{{ $child->birth_date->format('Y年m月d日') }}</td>
-                                        <td class="border border-gray-300 px-4 py-2">
-                                            <a href="{{ route('schedules.index', $child) }}"
-                                               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
-                                               スケジュール
-                                            </a>
-                                            <a href="{{ route('children.edit', $child) }}"
-                                                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded">
-                                                編集
-                                            </a>
-                                            <form action="{{ route('children.destroy', $child) }}" method="POST" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    onclick="return confirm('削除しますか？')"
-                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">
-                                                    削除
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
+                             <thead>
+    <tr class="bg-gray-100">
+        <th class="border border-gray-300 px-4 py-2 text-center">ニックネーム</th>
+        <th class="border border-gray-300 px-4 py-2 text-center">生年月日</th>
+        <th class="border border-gray-300 px-4 py-2 text-center">操作</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach ($children as $child)
+        <tr>
+            <td class="border border-gray-300 px-4 py-2 text-center">{{ $child->nickname }}</td>
+            <td class="border border-gray-300 px-4 py-2 text-center">{{ $child->birth_date->format('Y年m月d日') }}</td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+                <div class="flex gap-2 justify-center">
+                    <a href="{{ route('schedules.index', $child) }}"
+                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                       スケジュール
+                    </a>
+                    <a href="{{ route('children.edit', $child) }}"
+                        class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded">
+                        編集
+                    </a>
+                    <form action="{{ route('children.destroy', $child) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            onclick="return confirm('削除しますか？')"
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">
+                            削除
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    @endforeach
+</tbody>
                         </table>
                     @endif
 
