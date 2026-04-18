@@ -16,5 +16,6 @@ return [
         'birth_date' => '生年月日',
         'email'      => 'メールアドレス',
         'password'   => 'パスワード',
+        'vaccinated_date' => '接種日',  // ← これを追加
     ],
 ];

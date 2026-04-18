@@ -76,6 +76,9 @@
                                                     <input type="date" name="vaccinated_date"
                                                         value="{{ date('Y-m-d') }}"
                                                         class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                                    @error('vaccinated_date')
+                                                       <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                    @enderror
                                                     <button type="submit"
                                                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-sm">
                                                         接種済みにする
@@ -134,6 +137,9 @@
                                                     <input type="date" name="vaccinated_date"
                                                         value="{{ date('Y-m-d') }}"
                                                         class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                                    @error('vaccinated_date')
+                                                       <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                    @enderror
                                                     <button type="submit"
                                                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-sm">
                                                         接種済みにする
