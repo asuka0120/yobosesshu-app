@@ -17,5 +17,8 @@ return [
         'email'      => 'メールアドレス',
         'password'   => 'パスワード',
         'vaccinated_date' => '接種日',  // ← これを追加
+        'vaccination_schedule_id' => 'ワクチン名',    // ← 追加
+        'symptom'   => '症状',    // ← 追加
+        'start_date'  => '開始日',   // ← 追加
     ],
 ];
