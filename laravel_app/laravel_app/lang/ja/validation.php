@@ -22,5 +22,6 @@ return [
         'symptom'   => '症状',    // ← 追加
         'start_date'  => '開始日',   // ← 追加
         'end_date' => '終了日',
+        'name' => '医療機関名',
     ],
 ];
