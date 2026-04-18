@@ -10,6 +10,7 @@ return [
     'email'    => ':attributeは有効なメールアドレスで入力してください。',
     'unique'   => ':attributeはすでに使用されています。',
     'confirmed'=> ':attributeと確認用が一致しません。',
+    'after_or_equal' => ':attributeは:date以降の日付を入力してください。',
 
     'attributes' => [
         'nickname'   => 'ニックネーム',
@@ -20,5 +21,6 @@ return [
         'vaccination_schedule_id' => 'ワクチン名',    // ← 追加
         'symptom'   => '症状',    // ← 追加
         'start_date'  => '開始日',   // ← 追加
+        'end_date' => '終了日',
     ],
 ];
