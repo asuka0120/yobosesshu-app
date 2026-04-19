@@ -4,23 +4,24 @@
             ダッシュボード
         </h2>
     </x-slot>
-
+    
     {{-- 通知ボタン --}}
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-4 flex gap-6 items-center">
             <span class="text-gray-700 font-bold">🔔 プッシュ通知</span>
-            <button onclick="subscribePush()"
+            <button id="subscribeBtn" onclick="subscribePush()"
                 class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
                 通知を有効にする
             </button>
-            <button onclick="unsubscribePush()"
-                class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+            <button id="unsubscribeBtn" onclick="unsubscribePush()"
+                class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded hidden">
                 通知を無効にする
             </button>
         </div>
     </div>
 </div>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
@@ -186,5 +187,24 @@
         await subscription.unsubscribe();
         alert('プッシュ通知を無効にしました。');
     }
+    // ページ読み込み時にボタンの表示を切り替える
+async function updateButtonState() {
+    const registration = await navigator.serviceWorker.getRegistration('/sw.js');
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const unsubscribeBtn = document.getElementById('unsubscribeBtn');
+
+    if (registration) {
+        const subscription = await registration.pushManager.getSubscription();
+        if (subscription) {
+            subscribeBtn.classList.add('hidden');
+            unsubscribeBtn.classList.remove('hidden');
+            return;
+        }
+    }
+    subscribeBtn.classList.remove('hidden');
+    unsubscribeBtn.classList.add('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', updateButtonState);
 </script>
 </x-app-layout>
