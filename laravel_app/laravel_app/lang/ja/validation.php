@@ -25,5 +25,6 @@ return [
         'name' => '医療機関名',
         'medical_institution_id' => '医療機関',
         'appointment_date'  => '予約日',
+        'invite_code' => '招待コード',
     ],
 ];
