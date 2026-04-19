@@ -23,5 +23,7 @@ return [
         'start_date'  => '開始日',   // ← 追加
         'end_date' => '終了日',
         'name' => '医療機関名',
+        'medical_institution_id' => '医療機関',
+        'appointment_date'  => '予約日',
     ],
 ];
