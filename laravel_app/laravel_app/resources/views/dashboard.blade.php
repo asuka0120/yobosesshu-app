@@ -15,7 +15,7 @@
                 通知を有効にする
             </button>
             <button id="unsubscribeBtn" onclick="unsubscribePush()"
-                class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded hidden">
+                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded hidden">
                 通知を無効にする
             </button>
         </div>
@@ -165,6 +165,10 @@
             body: JSON.stringify(subscription),
         });
 
+// ボタンを切り替える（alertの前に移動）
+document.getElementById('subscribeBtn').classList.add('hidden');
+document.getElementById('unsubscribeBtn').classList.remove('hidden');
+
         alert('プッシュ通知を有効にしました！');
     }
 
@@ -186,21 +190,32 @@
 
         await subscription.unsubscribe();
         alert('プッシュ通知を無効にしました。');
+        // ボタンを切り替える
+document.getElementById('subscribeBtn').classList.remove('hidden');
+document.getElementById('unsubscribeBtn').classList.add('hidden');
     }
     // ページ読み込み時にボタンの表示を切り替える
 async function updateButtonState() {
-    const registration = await navigator.serviceWorker.getRegistration('/sw.js');
     const subscribeBtn = document.getElementById('subscribeBtn');
     const unsubscribeBtn = document.getElementById('unsubscribeBtn');
-
-    if (registration) {
-        const subscription = await registration.pushManager.getSubscription();
-        if (subscription) {
-            subscribeBtn.classList.add('hidden');
-            unsubscribeBtn.classList.remove('hidden');
-            return;
+    
+    try {
+        const permission = Notification.permission;
+        if (permission === 'granted') {
+            const registration = await navigator.serviceWorker.getRegistration('/sw.js');
+            if (registration) {
+                const subscription = await registration.pushManager.getSubscription();
+                if (subscription) {
+                    subscribeBtn.classList.add('hidden');
+                    unsubscribeBtn.classList.remove('hidden');
+                    return;
+                }
+            }
         }
+    } catch(e) {
+        console.log(e);
     }
+    
     subscribeBtn.classList.remove('hidden');
     unsubscribeBtn.classList.add('hidden');
 }
