@@ -5,12 +5,16 @@ return [
     'string'   => ':attributeは文字列で入力してください。',
     'max'      => [
         'string' => ':attributeは:max文字以内で入力してください。',
+        'file'   => ':attributeは:max KB以内のファイルを選択してください。', // ← 追加
     ],
     'date'     => ':attributeは正しい日付形式で入力してください。',
     'email'    => ':attributeは有効なメールアドレスで入力してください。',
     'unique'   => ':attributeはすでに使用されています。',
     'confirmed'=> ':attributeと確認用が一致しません。',
     'after_or_equal' => ':attributeは:date以降の日付を入力してください。',
+    'uploaded' => ':attributeのアップロードに失敗しました。',
+    'image' => ':attributeは画像ファイルを選択してください。',
+    
 
     'attributes' => [
         'nickname'   => 'ニックネーム',
@@ -26,5 +30,6 @@ return [
         'medical_institution_id' => '医療機関',
         'appointment_date'  => '予約日',
         'invite_code' => '招待コード',
+        'photo' => '写真',
     ],
 ];

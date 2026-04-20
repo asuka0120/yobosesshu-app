@@ -11,7 +11,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install
 RUN a2enmod rewrite
 COPY . /var/www/html
 WORKDIR /var/www/html
-# サーバーの玄関口を /var/www/html/laravel_app/public に設定する
-ENV APACHE_DOCUMENT_ROOT /var/www/html/laravel_app/public
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+RUN echo '<Directory ${APACHE_DOCUMENT_ROOT}>\n\tAllowOverride All\n\tRequire all granted\n</Directory>' >> /etc/apache2/sites-available/000-default.conf
