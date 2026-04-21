@@ -42,15 +42,22 @@ class VaccinationScheduleController extends Controller
             abort(403);
         }
 
-        $request->validate([
-            'vaccinated_date' => 'required|date',
-        ]);
+        $validator = \Validator::make($request->all(), [
+        'vaccinated_date' => 'required|date',
+    ]);
 
-        $schedule->update([
-            'status' => 'completed',
-            'vaccinated_date' => $request->vaccinated_date,
-        ]);
-
-        return redirect()->route('schedules.index', $child)->with('success', '接種済みに更新しました！');
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->with('error_schedule_id', $schedule->id)
+            ->withInput();
     }
+
+    $schedule->update([
+        'status' => 'completed',
+        'vaccinated_date' => $request->vaccinated_date,
+    ]);
+
+    return redirect()->route('schedules.index', $child)->with('success', '接種済みに更新しました！');
+}
 }

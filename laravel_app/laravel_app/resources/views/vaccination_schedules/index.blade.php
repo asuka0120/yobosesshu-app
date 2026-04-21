@@ -72,18 +72,19 @@
                                         <td class="border border-gray-300 px-4 py-2">
                                             @if ($schedule->status !== 'completed')
                                                 <form action="{{ route('schedules.complete', [$child, $schedule]) }}" method="POST" class="inline">
-                                                    @csrf
-                                                    <input type="date" name="vaccinated_date"
-                                                        value="{{ date('Y-m-d') }}"
-                                                        class="border border-gray-300 rounded px-2 py-1 text-sm">
-                                                    @error('vaccinated_date')
-                                                       <span class="text-red-500 text-sm">{{ $message }}</span>
-                                                    @enderror
-                                                    <button type="submit"
-                                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-sm">
-                                                        接種済みにする
-                                                    </button>
-                                                </form>
+    @csrf
+    <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
+    <input type="date" name="vaccinated_date"
+        value="{{ date('Y-m-d') }}"
+        class="border border-gray-300 rounded px-2 py-1 text-sm">
+    @if ($errors->has('vaccinated_date') && session('error_schedule_id') == $schedule->id)
+        <span class="text-red-500 text-sm">{{ $errors->first('vaccinated_date') }}</span>
+    @endif
+    <button type="submit"
+        class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-sm">
+        接種済みにする
+    </button>
+</form>
                                             @else
                                                 <span class="text-gray-400 text-sm">{{ $schedule->vaccinated_date->format('Y年m月d日') }}に接種</span>
                                             @endif
@@ -133,18 +134,19 @@
                                         <td class="border border-gray-300 px-4 py-2">
                                             @if ($schedule->status !== 'completed')
                                                 <form action="{{ route('schedules.complete', [$child, $schedule]) }}" method="POST" class="inline">
-                                                    @csrf
-                                                    <input type="date" name="vaccinated_date"
-                                                        value="{{ date('Y-m-d') }}"
-                                                        class="border border-gray-300 rounded px-2 py-1 text-sm">
-                                                    @error('vaccinated_date')
-                                                       <span class="text-red-500 text-sm">{{ $message }}</span>
-                                                    @enderror
-                                                    <button type="submit"
-                                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-sm">
-                                                        接種済みにする
-                                                    </button>
-                                                </form>
+    @csrf
+    <input type="hidden" name="schedule_id" value="{{ $schedule->id }}">
+    <input type="date" name="vaccinated_date"
+        value="{{ date('Y-m-d') }}"
+        class="border border-gray-300 rounded px-2 py-1 text-sm">
+    @if ($errors->has('vaccinated_date') && session('error_schedule_id') == $schedule->id)
+        <span class="text-red-500 text-sm">{{ $errors->first('vaccinated_date') }}</span>
+    @endif
+    <button type="submit"
+        class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-sm">
+        接種済みにする
+    </button>
+</form>
                                             @else
                                                 <span class="text-gray-400 text-sm">{{ $schedule->vaccinated_date->format('Y年m月d日') }}に接種</span>
                                             @endif
