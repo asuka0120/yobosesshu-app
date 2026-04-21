@@ -52,8 +52,8 @@ class FamilyGroupController extends Controller
         }
 
         // すでに参加している場合
-        if ($group->members->contains(Auth::id())) {
-            return redirect()->route('family_groups.index')->with('error', 'すでに参加しています。');
+        if ($group->members()->where('user_id', Auth::id())->exists()) {
+    return redirect()->route('family_groups.index')->with('error', 'すでに参加しています。');
         }
 
         $group->members()->attach(Auth::id());

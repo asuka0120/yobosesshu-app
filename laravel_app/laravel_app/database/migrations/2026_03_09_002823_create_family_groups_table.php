@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('family_group_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->unique(['family_group_id', 'user_id']); // ← 追加
         });
     }
 
