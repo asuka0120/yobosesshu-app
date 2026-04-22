@@ -53,8 +53,17 @@ class ChildController extends Controller
             'nickname' => 'required|string|max:50',
             'birth_date' => 'required|date',
         ]);
+        
+        // 生年月日が変更された場合はスケジュールを再生成
+    $birthDateChanged = $child->birth_date->format('Y-m-d') !== $request->birth_date;
 
         $child->update($request->only('nickname', 'birth_date'));
+
+        if ($birthDateChanged) {
+        // 未接種のスケジュールのみ削除して再生成
+        $child->vaccinationSchedules()->where('status', 'pending')->delete();
+        $this->generateSchedule($child);
+    }
 
         return redirect()->route('children.index')->with('success', '更新しました！');
     }
