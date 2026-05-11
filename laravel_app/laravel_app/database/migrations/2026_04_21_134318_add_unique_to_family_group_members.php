@@ -7,16 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     public function up(): void
-    {
-        Schema::table('family_group_members', function (Blueprint $table) {
-            $table->unique(['family_group_id', 'user_id']);
-        });
-    }
+{
+    Schema::table('family_group_members', function (Blueprint $table) {
+        $table->unique(['family_group_id', 'user_id'], 
+            'fgm_unique'); // ← 制約名を短くシンプルにする
+    });
+}
 
-    public function down(): void
-    {
-        Schema::table('family_group_members', function (Blueprint $table) {
-            $table->dropUnique(['family_group_id', 'user_id']);
-        });
-    }
+public function down(): void
+{
+    Schema::table('family_group_members', function (Blueprint $table) {
+        $table->dropUnique('fgm_unique');
+    });
+}
 };
